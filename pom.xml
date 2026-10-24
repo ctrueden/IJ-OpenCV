@@ -92,7 +92,7 @@
     <properties>
         <package-name>io.github.joheras.ijopencv</package-name>
         <main-class>io.github.joheras.ijopencv</main-class>
-        <license.licenseName>bsd_2</license.licenseName>
+        <license.licenseName>gpl_v3</license.licenseName>
         <license.copyrightOwners>University of La Rioja</license.copyrightOwners>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
