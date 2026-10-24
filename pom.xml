@@ -76,10 +76,10 @@
     </mailingLists>
 
     <scm>
-        <connection>scm:git:git@github.com:joheras/IJ-OpenCV.git</connection>
-        <developerConnection>scm:git:git@github.com:joheras/IJ-OpenCV.git</developerConnection>
-        <url>git@github.com:joheras/IJ-OpenCV.git</url>
-      <tag>IJ-OpenCV-1.2.1</tag>
+        <connection>scm:git:https://github.com/joheras/IJ-OpenCV</connection>
+        <developerConnection>scm:git:git@github.com:joheras/IJ-OpenCV</developerConnection>
+        <url>https://github.com/joheras/IJ-OpenCV</url>
+      <tag>HEAD</tag>
   </scm>
     <issueManagement>
         <system>GitHub Issues</system>
