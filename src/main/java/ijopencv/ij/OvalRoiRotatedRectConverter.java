@@ -23,16 +23,17 @@ package ijopencv.ij;
 
 import ij.gui.OvalRoi;
 import java.awt.Rectangle;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.RotatedRect;
-import static org.bytedeco.javacpp.opencv_core.merge;
-import static org.bytedeco.javacpp.opencv_imgproc.minAreaRect;
+import org.bytedeco.opencv.opencv_core.RotatedRect;
+import static org.bytedeco.opencv.global.opencv_core.merge;
+import static org.bytedeco.opencv.global.opencv_imgproc.minAreaRect;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class OvalRoiRotatedRectConverter extends AbstractConverter< OvalRoi, RotatedRect> {
@@ -59,10 +60,10 @@ public class OvalRoiRotatedRectConverter extends AbstractConverter< OvalRoi, Rot
 
         int[] xpoints = {rect.x, rect.x, rect.x + rect.width, rect.x + rect.width};
         int[] ypoints = {rect.y, rect.y + rect.height, rect.y + rect.height, rect.y};
-        opencv_core.Mat x = new opencv_core.Mat(xpoints);
-        opencv_core.Mat y = new opencv_core.Mat(ypoints);
-        opencv_core.MatVector xy = new opencv_core.MatVector(2);
-        opencv_core.Mat points = new opencv_core.Mat();
+        Mat x = new Mat(xpoints);
+        Mat y = new Mat(ypoints);
+        MatVector xy = new MatVector(2);
+        Mat points = new Mat();
         merge(xy, points);
         return (T)minAreaRect(points);
     }

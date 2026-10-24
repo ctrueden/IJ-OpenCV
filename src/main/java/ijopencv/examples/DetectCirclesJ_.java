@@ -36,9 +36,12 @@ import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.MatListOvalRoiConverter;
 import java.util.ArrayList;
 import net.imagej.ImageJ;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
+import org.bytedeco.opencv.global.opencv_core;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Point3f;
+import org.bytedeco.opencv.opencv_imgproc.Vec3fVector;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -58,14 +61,26 @@ public class DetectCirclesJ_ implements Command {
 
         // Converters
         ImagePlusMatConverter ic = new ImagePlusMatConverter();
-        opencv_core.Mat m = ic.convert(imp, Mat.class);
+        Mat m = ic.convert(imp, Mat.class);
         MatListOvalRoiConverter cc = new MatListOvalRoiConverter();
 
         Mat gray = new Mat();
         opencv_imgproc.cvtColor(m, gray, opencv_imgproc.COLOR_BGR2GRAY);
 
-        Mat circles = new Mat();
-        opencv_imgproc.HoughCircles(gray, circles, opencv_imgproc.CV_HOUGH_GRADIENT, 1.2, 100);
+        Vec3fVector circlesVec = new Vec3fVector();
+        opencv_imgproc.HoughCircles(gray, circlesVec, opencv_imgproc.HOUGH_GRADIENT, 1.2, 100, 100, 100, 0, 0);
+
+        // Copy into an Nx1 3-channel float Mat, as expected by the converter
+        int n = (int) circlesVec.size();
+        Mat circles = new Mat(n, 1, opencv_core.CV_32FC3);
+        FloatIndexer idx = circles.createIndexer();
+        for (int i = 0; i < n; i++) {
+            Point3f c = circlesVec.get(i);
+            idx.put(i, 0, 0, c.x());
+            idx.put(i, 0, 1, c.y());
+            idx.put(i, 0, 2, c.z());
+        }
+        idx.release();
 
         ArrayList<OvalRoi> or = new ArrayList<OvalRoi>();
         or = cc.convert(circles, or.getClass());

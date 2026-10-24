@@ -23,7 +23,7 @@ package ijopencv.opencv;
 
 import ij.gui.PointRoi;
 import java.lang.reflect.Type;
-import org.bytedeco.javacpp.opencv_core.Point2d;
+import org.bytedeco.opencv.opencv_core.Point2d;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;

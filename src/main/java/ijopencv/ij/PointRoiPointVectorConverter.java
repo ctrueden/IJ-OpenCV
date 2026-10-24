@@ -22,14 +22,14 @@
 package ijopencv.ij;
 
 import ij.gui.PointRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.PointVector;
+import org.bytedeco.opencv.opencv_core.PointVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Point;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class PointRoiPointVectorConverter extends AbstractConverter< PointRoi, PointVector> {
@@ -55,9 +55,9 @@ public class PointRoiPointVectorConverter extends AbstractConverter< PointRoi, P
 
         int[] xpoints = pr.getPolygon().xpoints;
         int[] ypoints = pr.getPolygon().ypoints;
-        opencv_core.PointVector pv = new opencv_core.PointVector(xpoints.length);
+        PointVector pv = new PointVector(xpoints.length);
         for (int i = 0; i < xpoints.length; i++) {
-            pv.put(i, new opencv_core.Point(xpoints[i], ypoints[i]));
+            pv.put(i, new Point(xpoints[i], ypoints[i]));
         }
         return (T) pv;
     }

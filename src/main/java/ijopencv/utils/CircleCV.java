@@ -26,7 +26,7 @@
  */
 package ijopencv.utils;
 
-import org.bytedeco.javacpp.opencv_core.*;
+import org.bytedeco.opencv.opencv_core.*;
 
 /**
  *

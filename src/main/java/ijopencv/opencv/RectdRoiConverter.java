@@ -22,8 +22,7 @@
 package ijopencv.opencv;
 
 import ij.gui.Roi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Rect2d;
+import org.bytedeco.opencv.opencv_core.Rect2d;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -51,7 +50,7 @@ public class RectdRoiConverter extends AbstractConverter< Rect2d, Roi> {
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-      opencv_core.Rect2d rect = (opencv_core.Rect2d)o; 
+      Rect2d rect = (Rect2d)o; 
         Roi r = new Roi(rect.x(), rect.y(), rect.width(), rect.height());
         return (T)r;
     }
@@ -63,6 +62,6 @@ public class RectdRoiConverter extends AbstractConverter< Rect2d, Roi> {
 
     @Override
     public Class< Rect2d> getInputType() {
-        return opencv_core.Rect2d.class;
+        return Rect2d.class;
     }
 }

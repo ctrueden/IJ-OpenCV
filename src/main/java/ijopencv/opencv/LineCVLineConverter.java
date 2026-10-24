@@ -25,14 +25,14 @@ import ij.gui.Line;
 import ijopencv.utils.LineCV;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_core.cvRound;
+import static org.bytedeco.opencv.global.opencv_core.cvRound;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Point;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class LineCVLineConverter extends AbstractConverter< LineCV, Line> {
@@ -59,8 +59,8 @@ public class LineCVLineConverter extends AbstractConverter< LineCV, Line> {
         double b = sin(l.getTheta());
         double x0 = a * l.getRho(), y0 = b * l.getRho();
 
-        opencv_core.Point pt1 = new opencv_core.Point(cvRound(x0 + 1000 * (-b)), cvRound(y0 + 1000 * (a))),
-                pt2 = new opencv_core.Point(cvRound(x0 - 1000 * (-b)), cvRound(y0 - 1000 * (a)));
+        Point pt1 = new Point(cvRound(x0 + 1000 * (-b)), cvRound(y0 + 1000 * (a))),
+                pt2 = new Point(cvRound(x0 - 1000 * (-b)), cvRound(y0 - 1000 * (a)));
 
         Line line = new Line(pt1.x(), pt1.y(), pt2.x(), pt2.y());
         return (T) line;

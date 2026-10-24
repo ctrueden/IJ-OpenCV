@@ -33,14 +33,16 @@ import ij.plugin.frame.RoiManager;
 import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.RectRoiConverter;
 import java.nio.file.Paths;
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_BGR2GRAY;
-import static org.bytedeco.javacpp.opencv_imgproc.cvtColor;
-import org.bytedeco.javacpp.opencv_objdetect;
-import static org.bytedeco.javacpp.opencv_objdetect.CASCADE_SCALE_IMAGE;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
+import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
+import static org.bytedeco.opencv.global.opencv_objdetect.CASCADE_SCALE_IMAGE;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_core.Size;
 
 /**
  *
@@ -56,10 +58,10 @@ public class FaceDetectionJ_ implements Command {
     public void run() {
         //Converters
         RectRoiConverter rc = new RectRoiConverter();
-        opencv_core.Mat img2 = ImagePlusMatConverter.toMat(imp, 8); // also does RGB to Gray automatically
+        Mat img2 = ImagePlusMatConverter.toMat(imp, 8); // also does RGB to Gray automatically
 
         // Detect the faces and store them as an array of rectangles
-        opencv_core.RectVector rv = detectFaces(img2);
+        RectVector rv = detectFaces(img2);
 
         // Add rectangles to ROI Manager
         RoiManager rm = new RoiManager();
@@ -74,14 +76,14 @@ public class FaceDetectionJ_ implements Command {
 
     }
 
-    public opencv_core.RectVector detectFaces(opencv_core.Mat image) {
+    public RectVector detectFaces(Mat image) {
         
         // Open xml classifier located in Fiji.app/lib (provided by IJ-OpenCV update site)
-        opencv_objdetect.CascadeClassifier faceclassifier = new opencv_objdetect.CascadeClassifier(Paths.get(IJ.getDirectory("imagej"),"lib","haarcascade_frontalface_alt.xml").toString());
+        CascadeClassifier faceclassifier = new CascadeClassifier(Paths.get(IJ.getDirectory("imagej"),"lib","haarcascade_frontalface_alt.xml").toString());
 
-        opencv_core.RectVector rv = new opencv_core.RectVector();
+        RectVector rv = new RectVector();
 
-        faceclassifier.detectMultiScale(image, rv, 1.1, 2, CASCADE_SCALE_IMAGE, new opencv_core.Size(30, 30), new opencv_core.Size(500, 500));
+        faceclassifier.detectMultiScale(image, rv, 1.1, 2, CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(500, 500));
         
         faceclassifier.close(); //prevent possible memory leak
         

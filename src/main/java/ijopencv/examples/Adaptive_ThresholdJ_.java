@@ -27,14 +27,13 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.MatImagePlusConverter;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
-import static org.bytedeco.javacpp.opencv_imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
-import static org.bytedeco.javacpp.opencv_imgproc.ADAPTIVE_THRESH_MEAN_C;
-import static org.bytedeco.javacpp.opencv_imgproc.THRESH_BINARY;
-import static org.bytedeco.javacpp.opencv_imgproc.THRESH_BINARY_INV;
-import static org.bytedeco.javacpp.opencv_imgproc.adaptiveThreshold;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import static org.bytedeco.opencv.global.opencv_imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+import static org.bytedeco.opencv.global.opencv_imgproc.ADAPTIVE_THRESH_MEAN_C;
+import static org.bytedeco.opencv.global.opencv_imgproc.THRESH_BINARY;
+import static org.bytedeco.opencv.global.opencv_imgproc.THRESH_BINARY_INV;
+import static org.bytedeco.opencv.global.opencv_imgproc.adaptiveThreshold;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -88,9 +87,9 @@ public class Adaptive_ThresholdJ_ implements Command {
         ImagePlusMatConverter ic = new ImagePlusMatConverter();
         MatImagePlusConverter mip = new MatImagePlusConverter();
 
-        opencv_core.Mat m = ic.convert(imp, Mat.class);
+        Mat m = ic.convert(imp, Mat.class);
         opencv_imgproc.cvtColor(m, m, opencv_imgproc.COLOR_BGR2GRAY);
-        opencv_core.Mat res = new opencv_core.Mat();
+        Mat res = new Mat();
 
         if (!showDialog()) {
             return;

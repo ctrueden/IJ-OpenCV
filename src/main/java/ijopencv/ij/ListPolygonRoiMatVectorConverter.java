@@ -29,9 +29,8 @@ package ijopencv.ij;
 import ij.gui.PolygonRoi;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -40,7 +39,7 @@ import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
-public class ListPolygonRoiMatVectorConverter extends AbstractConverter<List<PolygonRoi>, opencv_core.MatVector> {
+public class ListPolygonRoiMatVectorConverter extends AbstractConverter<List<PolygonRoi>, MatVector> {
 
     @Override
     public int compareTo(Prioritized o) {
@@ -60,7 +59,7 @@ public class ListPolygonRoiMatVectorConverter extends AbstractConverter<List<Pol
     @Override
     public < T> T convert(Object o, Class< T> type) {
         ArrayList<PolygonRoi> aproi = (ArrayList<PolygonRoi>) o;
-        opencv_core.MatVector mv = new opencv_core.MatVector(aproi.size());
+        MatVector mv = new MatVector(aproi.size());
         PolygonRoiMatConverter pg = new PolygonRoiMatConverter();
 
         for (int i = 0; i < aproi.size(); i++) {

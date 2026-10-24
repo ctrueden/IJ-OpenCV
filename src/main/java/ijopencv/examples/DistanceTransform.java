@@ -45,10 +45,9 @@ import ijopencv.opencv.MatImagePlusConverter;
 
 
 
-import static org.bytedeco.javacpp.opencv_imgproc.distanceTransform;
-import org.bytedeco.javacpp.opencv_imgproc;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
+import static org.bytedeco.opencv.global.opencv_imgproc.distanceTransform;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
 import org.scijava.widget.ChoiceWidget;
 
 
@@ -111,8 +110,8 @@ public class DistanceTransform implements Command {
             moveDiagonal = 5;
         }
         
-		opencv_core.Mat src = ic.convert(imp, Mat.class); //imageplus into Mat
-		opencv_core.Mat res = new opencv_core.Mat(); // empty Mat
+		Mat src = ic.convert(imp, Mat.class); //imageplus into Mat
+		Mat res = new Mat(); // empty Mat
 		// threshold if needed (!=0)
 		if (threshold !=0) {
 			opencv_imgproc.threshold(src, src, threshold, 255, opencv_imgproc.THRESH_BINARY | opencv_imgproc.THRESH_OTSU);
@@ -140,8 +139,8 @@ public class DistanceTransform implements Command {
  	public ImagePlus ij_opencv_disttransform(ImagePlus pic) {
  		ImagePlusMatConverter ic = new ImagePlusMatConverter();
 		MatImagePlusConverter mip = new MatImagePlusConverter();
-		opencv_core.Mat src = ic.convert(pic, Mat.class); //imageplus into Mat
-		opencv_core.Mat res = new opencv_core.Mat(); // empty Mat
+		Mat src = ic.convert(pic, Mat.class); //imageplus into Mat
+		Mat res = new Mat(); // empty Mat
         //distanceTransform itself with default settings to fit results from LocalThick
         distanceTransform(src, res, opencv_imgproc.DIST_L2, 5);
         ImagePlus imp2 = mip.convert(res, ImagePlus.class);  //back transform into imp2

@@ -32,16 +32,16 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import static org.bytedeco.javacpp.opencv_core.cvRound;
-import static org.bytedeco.javacpp.opencv_core.split;
+import org.bytedeco.opencv.opencv_core.Mat;
+import static org.bytedeco.opencv.global.opencv_core.cvRound;
+import static org.bytedeco.opencv.global.opencv_core.split;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.MatVector;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class MatListOvalRoiConverter extends AbstractConverter<Mat, List<OvalRoi>> {
@@ -64,7 +64,7 @@ public class MatListOvalRoiConverter extends AbstractConverter<Mat, List<OvalRoi
     @Override
     public < T> T convert(Object o, Class< T> type) {
         Mat circles = (Mat) o;
-        opencv_core.MatVector xyr = new opencv_core.MatVector(3);
+        MatVector xyr = new MatVector(3);
         split(circles, xyr);
         int num = circles.size().height();
 
@@ -88,7 +88,7 @@ public class MatListOvalRoiConverter extends AbstractConverter<Mat, List<OvalRoi
     }
 
     @Override
-    public Class< opencv_core.Mat> getInputType() {
-        return opencv_core.Mat.class;
+    public Class< Mat> getInputType() {
+        return Mat.class;
     }
 }

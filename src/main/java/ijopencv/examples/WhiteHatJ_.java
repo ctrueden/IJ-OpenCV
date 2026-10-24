@@ -35,15 +35,15 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.MatImagePlusConverter;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
-import static org.bytedeco.javacpp.opencv_imgproc.MORPH_RECT;
-import static org.bytedeco.javacpp.opencv_imgproc.getStructuringElement;
-import static org.bytedeco.javacpp.opencv_imgproc.morphologyEx;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import static org.bytedeco.opencv.global.opencv_imgproc.MORPH_RECT;
+import static org.bytedeco.opencv.global.opencv_imgproc.getStructuringElement;
+import static org.bytedeco.opencv.global.opencv_imgproc.morphologyEx;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Size;
 
 /**
  *
@@ -65,15 +65,15 @@ int xSize, ySize;
         ImagePlusMatConverter ic = new ImagePlusMatConverter();
         MatImagePlusConverter mip = new MatImagePlusConverter();
 
-        opencv_core.Mat m = ic.convert(imp,Mat.class);
+        Mat m = ic.convert(imp,Mat.class);
         opencv_imgproc.cvtColor(m, m, opencv_imgproc.COLOR_BGR2GRAY);
-        Mat res = new opencv_core.Mat();
+        Mat res = new Mat();
 
         if (!showDialog()) {
             return;
         }
         
-        Mat element = getStructuringElement(MORPH_RECT, new opencv_core.Size(xSize, ySize));
+        Mat element = getStructuringElement(MORPH_RECT, new Size(xSize, ySize));
 
         morphologyEx(m, res, opencv_imgproc.MORPH_TOPHAT, element);
 

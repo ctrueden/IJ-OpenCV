@@ -33,16 +33,17 @@ import java.util.ArrayList;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.javacpp.PointerPointer;
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_core.CV_32F;
-import static org.bytedeco.javacpp.opencv_core.KMEANS_PP_CENTERS;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import static org.bytedeco.javacpp.opencv_core.kmeans;
-import static org.bytedeco.javacpp.opencv_imgproc.calcHist;
+import org.bytedeco.opencv.global.opencv_core;
+import static org.bytedeco.opencv.global.opencv_core.CV_32F;
+import static org.bytedeco.opencv.global.opencv_core.KMEANS_PP_CENTERS;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import static org.bytedeco.opencv.global.opencv_core.kmeans;
+import static org.bytedeco.opencv.global.opencv_imgproc.calcHist;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.TermCriteria;
 
 
 /*
@@ -75,7 +76,7 @@ public class KMeans_ClusteringJ implements Command {
         // Converters
         ImagePlusMatVectorConverter isc = new ImagePlusMatVectorConverter();
 
-        opencv_core.MatVector mvec = isc.convert(imp, MatVector.class);
+        MatVector mvec = isc.convert(imp, MatVector.class);
 
         if (!showDialog()) {
             return;
@@ -108,7 +109,7 @@ public class KMeans_ClusteringJ implements Command {
         Mat labels = new Mat();
         Mat centers = new Mat();
 
-        opencv_core.TermCriteria tc = new opencv_core.TermCriteria(opencv_core.TermCriteria.EPS + opencv_core.TermCriteria.COUNT, 10, 1.0);
+        TermCriteria tc = new TermCriteria(TermCriteria.EPS + TermCriteria.COUNT, 10, 1.0);
 
         kmeans(data, nclusters, labels, tc, 1, KMEANS_PP_CENTERS);
 

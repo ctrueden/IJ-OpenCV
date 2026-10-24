@@ -22,8 +22,7 @@
 package ijopencv.opencv;
 
 import ij.gui.PointRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Point2fVector;
+import org.bytedeco.opencv.opencv_core.Point2fVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -51,7 +50,7 @@ public class Point2fVectorPointRoiConverter extends AbstractConverter< Point2fVe
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-    opencv_core.Point2fVector pv = (opencv_core.Point2fVector)o;
+    Point2fVector pv = (Point2fVector)o;
         float[] xpoints = new float[(int) pv.size()];
         float[] ypoints = new float[(int) pv.size()];
 

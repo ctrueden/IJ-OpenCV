@@ -23,14 +23,14 @@ package ijopencv.opencv;
 
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.RotatedRect;
+import org.bytedeco.opencv.opencv_core.RotatedRect;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Point;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class RotatedRectPolygonRoiConverter extends AbstractConverter< RotatedRect, PolygonRoi> {
@@ -52,23 +52,23 @@ public class RotatedRectPolygonRoiConverter extends AbstractConverter< RotatedRe
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-        RotatedRect rr = (opencv_core.RotatedRect) o;
+        RotatedRect rr = (RotatedRect) o;
         double _angle = rr.angle() * Math.PI / 180.0;
         double b = (double) Math.cos(_angle) * 0.5f;
         double a = (double) Math.sin(_angle) * 0.5f;
 
-        opencv_core.Point pt0 = new opencv_core.Point(
+        Point pt0 = new Point(
                 (int) (rr.center().x() - a * rr.size().height() - b * rr.size().width()),
                 (int) (rr.center().y() + b * rr.size().height() - a * rr.size().width()));
 
-        opencv_core.Point pt1 = new opencv_core.Point(
+        Point pt1 = new Point(
                 (int) (rr.center().x() + a * rr.size().height() - b * rr.size().width()),
                 (int) (rr.center().y() - b * rr.size().height() - a * rr.size().width()));
 
-        opencv_core.Point pt2 = new opencv_core.Point((int) (2 * rr.center().x() - pt0.x()),
+        Point pt2 = new Point((int) (2 * rr.center().x() - pt0.x()),
                 (int) (2 * rr.center().y() - pt0.y()));
 
-        opencv_core.Point pt3 = new opencv_core.Point((int) (2 * rr.center().x() - pt1.x()),
+        Point pt3 = new Point((int) (2 * rr.center().x() - pt1.x()),
                 (int) (2 * rr.center().y() - pt1.y()));
 
         int[] xpoints = new int[4];

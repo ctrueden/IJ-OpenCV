@@ -32,15 +32,16 @@ import java.awt.Rectangle;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import static org.bytedeco.javacpp.opencv_core.merge;
+import org.bytedeco.opencv.opencv_core.Mat;
+import static org.bytedeco.opencv.global.opencv_core.merge;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.Point;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class ListOvalRoiMatConverter extends AbstractConverter<List<OvalRoi>, Mat> {
@@ -69,7 +70,7 @@ public class ListOvalRoiMatConverter extends AbstractConverter<List<OvalRoi>, Ma
 
         for (int i = 0; i < alor.size(); i++) {
             Rectangle rect = alor.get(i).getBounds();
-            CircleCV c = new CircleCV(new opencv_core.Point(rect.x + rect.width / 2, rect.y + rect.height / 2), rect.width / 2);
+            CircleCV c = new CircleCV(new Point(rect.x + rect.width / 2, rect.y + rect.height / 2), rect.width / 2);
 
             xpoints[i] = rect.x + rect.width / 2;
             ypoints[i] = rect.y + rect.height / 2;
@@ -79,7 +80,7 @@ public class ListOvalRoiMatConverter extends AbstractConverter<List<OvalRoi>, Ma
         Mat mx = new Mat(xpoints);
         Mat my = new Mat(ypoints);
         Mat mr = new Mat(radiuses);
-        opencv_core.MatVector mxyr = new opencv_core.MatVector(3);
+        MatVector mxyr = new MatVector(3);
         mxyr.put(0, mx);
         mxyr.put(1, my);
         mxyr.put(2, mr);

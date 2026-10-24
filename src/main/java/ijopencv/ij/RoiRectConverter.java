@@ -23,7 +23,7 @@ package ijopencv.ij;
 
 import ij.gui.Roi;
 import java.awt.Rectangle;
-import org.bytedeco.javacpp.opencv_core.Rect;
+import org.bytedeco.opencv.opencv_core.Rect;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;

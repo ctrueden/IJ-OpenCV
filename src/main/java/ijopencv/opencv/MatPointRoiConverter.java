@@ -22,15 +22,15 @@
 package ijopencv.opencv;
 
 import ij.gui.PointRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import static org.bytedeco.javacpp.opencv_core.split;
+import org.bytedeco.opencv.opencv_core.Mat;
+import static org.bytedeco.opencv.global.opencv_core.split;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.MatVector;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class MatPointRoiConverter extends AbstractConverter< Mat, PointRoi> {
@@ -53,7 +53,7 @@ public class MatPointRoiConverter extends AbstractConverter< Mat, PointRoi> {
     @Override
     public < T> T convert(Object o, Class< T> type) {
         Mat m =(Mat)o;
-        opencv_core.MatVector xy = new opencv_core.MatVector(2);
+        MatVector xy = new MatVector(2);
         split(m, xy);
         int h = m.rows();
         int[] xpoints = new int[h];

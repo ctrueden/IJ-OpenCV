@@ -23,8 +23,7 @@ package ijopencv.opencv;
 
 import ij.gui.PointRoi;
 import java.lang.reflect.Type;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Point2f;
+import org.bytedeco.opencv.opencv_core.Point2f;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -52,7 +51,7 @@ public class Point2fPointRoiConverter extends AbstractConverter< Point2f, PointR
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-        opencv_core.Point2f p =(opencv_core.Point2f)o;
+        Point2f p =(Point2f)o;
         PointRoi pr = new PointRoi(p.x(), p.y());
         return (T)pr;
     }
@@ -63,8 +62,8 @@ public class Point2fPointRoiConverter extends AbstractConverter< Point2f, PointR
     }
 
     @Override
-    public Class< opencv_core.Point2f> getInputType() {
-        return opencv_core.Point2f.class;
+    public Class< Point2f> getInputType() {
+        return Point2f.class;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class Point2fPointRoiConverter extends AbstractConverter< Point2f, PointR
                                 if(!(src instanceof Point2f)){
             return false;
         }
-        opencv_core.Point2f p =(opencv_core.Point2f)src;
+        Point2f p =(Point2f)src;
         if (p.sizeof() != 2) {
             return false;
         }

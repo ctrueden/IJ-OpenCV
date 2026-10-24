@@ -27,15 +27,17 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatConverter;
 
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_core.multiply;
-import static org.bytedeco.javacpp.opencv_highgui.imshow;
-import static org.bytedeco.javacpp.opencv_highgui.waitKey;
-import org.bytedeco.javacpp.opencv_photo;
-import static org.bytedeco.javacpp.opencv_photo.createMergeMertens;
+import static org.bytedeco.opencv.global.opencv_core.multiply;
+import static org.bytedeco.opencv.global.opencv_highgui.imshow;
+import static org.bytedeco.opencv.global.opencv_highgui.waitKey;
+import static org.bytedeco.opencv.global.opencv_photo.createMergeMertens;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatExpr;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_photo.MergeMertens;
 
 
 /*
@@ -60,12 +62,12 @@ public class High_Dynamic_Range_ImagingJ_ implements Command {
 
         ImagePlusMatConverter isc = new ImagePlusMatConverter();
 
-        opencv_core.MatVector mvec = isc.convert(imp,opencv_core.MatVector.class);
-        opencv_core.Mat res = new opencv_core.Mat();
-        opencv_photo.MergeMertens merge_mertens = createMergeMertens();
+        MatVector mvec = isc.convert(imp,MatVector.class);
+        Mat res = new Mat();
+        MergeMertens merge_mertens = createMergeMertens();
         merge_mertens.process(mvec, res);
 
-        opencv_core.MatExpr me = multiply(255, res);
+        MatExpr me = multiply(255, res);
 
         imshow("res", me.a());
         waitKey(0);

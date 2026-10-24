@@ -29,9 +29,8 @@ package ijopencv.ij;
 import ij.gui.Roi;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Rect;
-import org.bytedeco.javacpp.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_core.Rect;
+import org.bytedeco.opencv.opencv_core.RectVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -40,7 +39,7 @@ import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
-public class ListRoiRectVectorConverter extends AbstractConverter<List<Roi>, opencv_core.RectVector> {
+public class ListRoiRectVectorConverter extends AbstractConverter<List<Roi>, RectVector> {
 
     @Override
     public int compareTo(Prioritized o) {

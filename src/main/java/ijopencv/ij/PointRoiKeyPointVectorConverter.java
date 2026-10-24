@@ -22,14 +22,14 @@
 package ijopencv.ij;
 
 import ij.gui.PointRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.KeyPointVector;
+import org.bytedeco.opencv.opencv_core.KeyPointVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.KeyPoint;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class PointRoiKeyPointVectorConverter extends AbstractConverter< PointRoi, KeyPointVector> {
@@ -57,7 +57,7 @@ public class PointRoiKeyPointVectorConverter extends AbstractConverter< PointRoi
         int[] ypoints = pr.getPolygon().ypoints;
         KeyPointVector pv = new KeyPointVector(xpoints.length);
         for (int i = 0; i < xpoints.length; i++) {
-            pv.put(i, new opencv_core.KeyPoint(xpoints[i], ypoints[i], 1));
+            pv.put(i, new KeyPoint(xpoints[i], ypoints[i], 1));
         }
         return (T) pv;
     }

@@ -34,9 +34,12 @@ import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.MatListLineConverter;
 import java.util.ArrayList;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
+import org.bytedeco.opencv.global.opencv_core;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Point2f;
+import org.bytedeco.opencv.opencv_imgproc.Vec2fVector;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -110,7 +113,7 @@ public class HoughLinesJ_  implements Command {
         ImagePlusMatConverter ic  = new ImagePlusMatConverter();
         
 		// Convert input imp to Mat
-        opencv_core.Mat m = ic.convert(imp, Mat.class);
+        Mat m = ic.convert(imp, Mat.class);
         
         // Convert from degrees to radians
         min_theta  = Math.toRadians(min_theta);
@@ -118,8 +121,19 @@ public class HoughLinesJ_  implements Command {
         step_theta = Math.toRadians(step_theta);
         		
 		// Do Hough line detection
-        Mat lines = new Mat();
-        opencv_imgproc.HoughLines(m, lines, step_line, step_theta, min_length, 0, 0, min_theta, max_theta);
+        Vec2fVector linesVec = new Vec2fVector();
+        opencv_imgproc.HoughLines(m, linesVec, step_line, step_theta, min_length, 0, 0, min_theta, max_theta);
+
+        // Copy into an Nx1 2-channel float Mat, as expected by the converter
+        int n = (int) linesVec.size();
+        Mat lines = new Mat(n, 1, opencv_core.CV_32FC2);
+        FloatIndexer idx = lines.createIndexer();
+        for (int i = 0; i < n; i++) {
+            Point2f l = linesVec.get(i);
+            idx.put(i, 0, 0, l.x());
+            idx.put(i, 0, 1, l.y());
+        }
+        idx.release();
 		
 		// Convert lines Mat to ArrayList of ij line
 		MatListLineConverter lc = new MatListLineConverter();

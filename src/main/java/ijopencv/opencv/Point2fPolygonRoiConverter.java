@@ -23,8 +23,7 @@ package ijopencv.opencv;
 
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Point2f;
+import org.bytedeco.opencv.opencv_core.Point2f;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -52,7 +51,7 @@ public class Point2fPolygonRoiConverter extends AbstractConverter< Point2f, Poly
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-    opencv_core.Point2f p = (opencv_core.Point2f) o;
+    Point2f p = (Point2f) o;
         int[] xpoints = new int[p.sizeof() / 2];
         int[] ypoints = new int[p.sizeof() / 2];
 

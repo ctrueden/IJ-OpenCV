@@ -23,8 +23,7 @@ package ijopencv.ij;
 
 import ij.gui.Roi;
 import java.awt.Rectangle;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Rect2f;
+import org.bytedeco.opencv.opencv_core.Rect2f;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -54,7 +53,7 @@ public class RoiRectfConverter extends AbstractConverter< Roi, Rect2f> {
     public < T> T convert(Object o, Class< T> type) {
     Roi r =(Roi)o; 
         Rectangle r1 = r.getBounds();
-        opencv_core.Rect2f rect = new opencv_core.Rect2f(r1.x, r1.y, r1.width, r1.height);
+        Rect2f rect = new Rect2f(r1.x, r1.y, r1.width, r1.height);
         return (T)rect;
     }
 

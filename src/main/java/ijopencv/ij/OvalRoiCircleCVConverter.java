@@ -26,16 +26,16 @@ import ijopencv.utils.Circle2fCV;
 import ijopencv.utils.CircleCV;
 import java.awt.Rectangle;
 import java.lang.reflect.Type;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.RotatedRect;
-import static org.bytedeco.javacpp.opencv_core.merge;
-import static org.bytedeco.javacpp.opencv_imgproc.minAreaRect;
+import org.bytedeco.opencv.opencv_core.RotatedRect;
+import static org.bytedeco.opencv.global.opencv_core.merge;
+import static org.bytedeco.opencv.global.opencv_imgproc.minAreaRect;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Point;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class OvalRoiCircleCVConverter extends AbstractConverter< OvalRoi, CircleCV> {
@@ -59,7 +59,7 @@ public class OvalRoiCircleCVConverter extends AbstractConverter< OvalRoi, Circle
     public < T> T convert(Object o, Class< T> type) {
         OvalRoi or = (OvalRoi) o;
         Rectangle rect = or.getPolygon().getBounds();
-        CircleCV c = new CircleCV(new opencv_core.Point(rect.x + rect.width / 2, rect.y + rect.height / 2), rect.width / 2);
+        CircleCV c = new CircleCV(new Point(rect.x + rect.width / 2, rect.y + rect.height / 2), rect.width / 2);
         return (T) c;
     }
 

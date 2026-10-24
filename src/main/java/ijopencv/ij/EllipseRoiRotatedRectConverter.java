@@ -22,10 +22,9 @@
 package ijopencv.ij;
 
 import ij.gui.EllipseRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.RotatedRect;
-import org.bytedeco.javacpp.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.RotatedRect;
+import org.bytedeco.opencv.global.opencv_imgproc;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -55,8 +54,8 @@ public class EllipseRoiRotatedRectConverter extends AbstractConverter< EllipseRo
     public < T> T convert(Object o, Class< T> type) {
         EllipseRoi er = (EllipseRoi) o;
         PolygonRoiMatConverter pg = new PolygonRoiMatConverter();
-        opencv_core.Mat points = pg.convert(er, Mat.class);
-        opencv_core.RotatedRect rr = opencv_imgproc.minAreaRect(points);
+        Mat points = pg.convert(er, Mat.class);
+        RotatedRect rr = opencv_imgproc.minAreaRect(points);
         return (T) rr;
     }
 

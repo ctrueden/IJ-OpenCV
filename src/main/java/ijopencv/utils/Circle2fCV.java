@@ -26,7 +26,7 @@
  */
 package ijopencv.utils;
 
-import org.bytedeco.javacpp.opencv_core;
+import org.bytedeco.opencv.opencv_core.Point2f;
 
 /**
  *
@@ -34,15 +34,15 @@ import org.bytedeco.javacpp.opencv_core;
  */
 public class Circle2fCV {
     
-    private final opencv_core.Point2f center;
+    private final Point2f center;
     private final float radius;
 
-    public Circle2fCV(opencv_core.Point2f center, float radius) {
+    public Circle2fCV(Point2f center, float radius) {
         this.center = center;
         this.radius = radius;
     }
 
-    public opencv_core.Point2f getCenter() {
+    public Point2f getCenter() {
         return center;
     }
 

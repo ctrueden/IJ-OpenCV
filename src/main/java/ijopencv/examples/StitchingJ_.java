@@ -28,12 +28,12 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatVectorConverter;
 import ijopencv.opencv.MatImagePlusConverter;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import org.bytedeco.javacpp.opencv_stitching;
+import org.bytedeco.opencv.opencv_core.MatVector;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_stitching.Stitcher;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -58,11 +58,11 @@ public class StitchingJ_ implements Command {
         ImagePlusMatVectorConverter isc = new ImagePlusMatVectorConverter();
         MatImagePlusConverter ic = new MatImagePlusConverter();
         
-        opencv_core.MatVector m = isc.convert(imp,MatVector.class);
+        MatVector m = isc.convert(imp,MatVector.class);
 
-        opencv_stitching.Stitcher stitcher = opencv_stitching.Stitcher.createDefault(true);
+        Stitcher stitcher = Stitcher.create(Stitcher.PANORAMA);
 
-        opencv_core.Mat res = new opencv_core.Mat();
+        Mat res = new Mat();
         stitcher.stitch(m, res);
 
         ImagePlus resIJ = ic.convert(res,ImagePlus.class);

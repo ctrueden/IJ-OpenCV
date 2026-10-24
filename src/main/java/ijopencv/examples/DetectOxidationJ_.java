@@ -37,12 +37,14 @@ import ijopencv.opencv.Circle2fOvalRoiConverter;
 import ijopencv.utils.Circle2fCV;
 import org.bytedeco.javacpp.FloatPointer;
 
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_core.split;
-import org.bytedeco.javacpp.opencv_imgproc;
+import static org.bytedeco.opencv.global.opencv_core.split;
+import org.bytedeco.opencv.global.opencv_imgproc;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.Point2f;
 
 /**
  *
@@ -65,22 +67,22 @@ public class DetectOxidationJ_ implements Command {
     public OvalRoi detectROI(ImagePlus imp){
         // Converter 
          ImagePlusMatConverter ic = new ImagePlusMatConverter();
-        opencv_core.Mat newImage = ic.convert(imp,opencv_core.Mat.class);
+        Mat newImage = ic.convert(imp,Mat.class);
         
         
-        opencv_core.Mat hsv = new opencv_core.Mat();
+        Mat hsv = new Mat();
         opencv_imgproc.cvtColor(newImage,hsv,opencv_imgproc.COLOR_BGR2HSV);
         
-        opencv_core.MatVector mv = new opencv_core.MatVector(3);
+        MatVector mv = new MatVector(3);
         split(hsv, mv);
         
-        opencv_core.Mat thres = new opencv_core.Mat();
+        Mat thres = new Mat();
         opencv_imgproc.threshold(mv.get(1), thres, 0, 255, opencv_imgproc.CV_THRESH_BINARY_INV + opencv_imgproc.CV_THRESH_OTSU);
         
-        opencv_core.MatVector contours = new opencv_core.MatVector();
+        MatVector contours = new MatVector();
         opencv_imgproc.findContours(thres,contours,opencv_imgproc.RETR_TREE,opencv_imgproc.CHAIN_APPROX_SIMPLE);
         
-        opencv_core.Point2f c = new opencv_core.Point2f();
+        Point2f c = new Point2f();
         FloatPointer r  = new FloatPointer();
         
         

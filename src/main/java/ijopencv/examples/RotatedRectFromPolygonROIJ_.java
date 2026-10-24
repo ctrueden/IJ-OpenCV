@@ -34,12 +34,13 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.PolygonRoiMatConverter;
 import ijopencv.opencv.RotatedRectPolygonRoiConverter;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.global.opencv_imgproc;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Point2f;
+import org.bytedeco.opencv.opencv_core.RotatedRect;
 
 /**
  *
@@ -61,8 +62,8 @@ public class RotatedRectFromPolygonROIJ_ implements Command {
 
         Mat m = pc.convert(pr,Mat.class);
 
-        opencv_core.RotatedRect rr = opencv_imgproc.minAreaRect(m);
-        opencv_core.Point2f pt = new opencv_core.Point2f(9);
+        RotatedRect rr = opencv_imgproc.minAreaRect(m);
+        Point2f pt = new Point2f(9);
 
         rr.points(pt);
 

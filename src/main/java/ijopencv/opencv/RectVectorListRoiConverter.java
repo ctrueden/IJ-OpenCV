@@ -30,8 +30,7 @@ import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_core.RectVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -59,7 +58,7 @@ public class RectVectorListRoiConverter extends AbstractConverter<RectVector, Li
 
     @Override
     public < T> T convert(Object o, Class< T> type) {
-        opencv_core.RectVector rv = (opencv_core.RectVector) o;
+        RectVector rv = (RectVector) o;
         ArrayList<Roi> rois = new ArrayList<Roi>();
         RectRoiConverter rc = new RectRoiConverter();
         for (int i = 0; i < rv.size(); i++) {
@@ -76,7 +75,7 @@ public class RectVectorListRoiConverter extends AbstractConverter<RectVector, Li
     }
 
     @Override
-    public Class< opencv_core.RectVector> getInputType() {
-        return opencv_core.RectVector.class;
+    public Class< RectVector> getInputType() {
+        return RectVector.class;
     }
 }

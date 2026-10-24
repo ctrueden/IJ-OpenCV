@@ -33,13 +33,14 @@ import java.util.ArrayList;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.javacpp.PointerPointer;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import org.bytedeco.javacpp.opencv_imgproc;
-import static org.bytedeco.javacpp.opencv_imgproc.calcHist;
+import org.bytedeco.opencv.global.opencv_core;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import static org.bytedeco.opencv.global.opencv_imgproc.calcHist;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
 
 
 /*
@@ -73,7 +74,7 @@ public class BGR_Histogram_ComparisonJ_ implements Command {
 
         // Converter
         ImagePlusMatVectorConverter isc = new ImagePlusMatVectorConverter();
-        opencv_core.MatVector mvec = isc.convert(imp,MatVector.class);
+        MatVector mvec = isc.convert(imp,MatVector.class);
 
         if (!showDialog()) {
             return;
@@ -81,14 +82,14 @@ public class BGR_Histogram_ComparisonJ_ implements Command {
 
         double[][] comparison = new double[4][stacksize * (stacksize - 1) / 2];
 
-        opencv_core.Mat mask = new opencv_core.Mat();
+        Mat mask = new Mat();
         IntPointer intPtrChannels = new IntPointer(0, 1, 2);
         IntPointer intPtrHistSize = new IntPointer(blueBins, greenBins, redBins);
         FloatPointer fltPtrRanges = new FloatPointer(0.0f, 255.0f, 0.0f, 255.0f, 0.0f, 255.0f);
         PointerPointer ptptranges = new PointerPointer(fltPtrRanges, fltPtrRanges, fltPtrRanges);
 
-        opencv_core.Mat hist1 = new opencv_core.Mat();
-        opencv_core.Mat hist2 = new opencv_core.Mat();
+        Mat hist1 = new Mat();
+        Mat hist2 = new Mat();
         int n = 0;
         for (int i = 0; i < mvec.size() - 1; i++) {
             calcHist(mvec.get(i), 1, intPtrChannels, mask, hist1, 3, intPtrHistSize, ptptranges, true, false);

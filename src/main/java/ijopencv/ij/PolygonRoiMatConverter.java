@@ -22,15 +22,15 @@
 package ijopencv.ij;
 
 import ij.gui.PolygonRoi;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import static org.bytedeco.javacpp.opencv_core.merge;
+import org.bytedeco.opencv.opencv_core.Mat;
+import static org.bytedeco.opencv.global.opencv_core.merge;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.MatVector;
 
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
 public class PolygonRoiMatConverter extends AbstractConverter< PolygonRoi, Mat> {
@@ -55,7 +55,7 @@ public class PolygonRoiMatConverter extends AbstractConverter< PolygonRoi, Mat> 
         PolygonRoi pr =(PolygonRoi)o;
         Mat mx = new Mat(pr.getPolygon().xpoints);
         Mat my = new Mat(pr.getPolygon().ypoints);
-        opencv_core.MatVector mxy = new opencv_core.MatVector(2);
+        MatVector mxy = new MatVector(2);
         mxy.put(0, mx);
         mxy.put(1, my);
         Mat m = new Mat();

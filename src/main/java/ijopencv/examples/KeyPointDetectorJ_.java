@@ -36,15 +36,23 @@ import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.KeyPointVectorPointRoiConverter;
 import ijopencv.ij.PointRoiKeyPointVectorConverter;
 import java.util.Vector;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.KeyPointVector;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_features2d;
-import org.bytedeco.javacpp.opencv_features2d.KAZE;
-import org.bytedeco.javacpp.opencv_xfeatures2d;
+import org.bytedeco.opencv.opencv_core.KeyPointVector;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_features2d.AKAZE;
+import org.bytedeco.opencv.opencv_features2d.BRISK;
+import org.bytedeco.opencv.opencv_features2d.KAZE;
+import org.bytedeco.opencv.opencv_features2d.MSER;
+import org.bytedeco.opencv.opencv_features2d.ORB;
+import org.bytedeco.opencv.opencv_features2d.SIFT;
+import org.bytedeco.opencv.opencv_xfeatures2d.SURF;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_features2d.AgastFeatureDetector;
+import org.bytedeco.opencv.opencv_features2d.FastFeatureDetector;
+import org.bytedeco.opencv.opencv_features2d.Feature2D;
+import org.bytedeco.opencv.opencv_features2d.GFTTDetector;
+import org.bytedeco.opencv.opencv_features2d.SimpleBlobDetector;
 
 /**
  *
@@ -78,42 +86,42 @@ public class KeyPointDetectorJ_ implements Command {
     }
 
     public PointRoi keyPointDetection(String method) {
-        opencv_features2d.Feature2D f2d = new opencv_features2d.Feature2D();
+        Feature2D f2d = new Feature2D();
 
         if (method == "SIFT") {
-            f2d = opencv_xfeatures2d.SIFT.create();
+            f2d = SIFT.create();
         }
         if (method == "SURF") {
-            f2d = opencv_xfeatures2d.SURF.create();
+            f2d = SURF.create();
         }
         if (method == "ORB") {
-            f2d = opencv_features2d.ORB.create();
+            f2d = ORB.create();
 
         }
         if (method == "BRISK") {
-            f2d = opencv_features2d.BRISK.create();
+            f2d = BRISK.create();
         }
         if (method == "MSER") {
-            f2d = opencv_features2d.MSER.create();
+            f2d = MSER.create();
         }
         if (method == "AKAZE") {
-            f2d = opencv_features2d.AKAZE.create();
+            f2d = AKAZE.create();
         }
         if (method == "SimpleBlob") {
-            f2d = opencv_features2d.SimpleBlobDetector.create();
+            f2d = SimpleBlobDetector.create();
         }
 
         if (method == "KAZE") {
             f2d = KAZE.create();
         }
         if (method == "AGAST") {
-            f2d = opencv_features2d.AgastFeatureDetector.create();
+            f2d = AgastFeatureDetector.create();
         }
         if (method == "FAST") {
-            f2d = opencv_features2d.FastFeatureDetector.create();
+            f2d = FastFeatureDetector.create();
         }
         if (method == "GFFT") {
-            f2d = opencv_features2d.GFTTDetector.create();
+            f2d = GFTTDetector.create();
         }
 
         // Converters
@@ -122,9 +130,9 @@ public class KeyPointDetectorJ_ implements Command {
         PointRoiKeyPointVectorConverter roi2kp = new PointRoiKeyPointVectorConverter();
         
         
-        opencv_core.Mat imageOpenCV = ic.convert(imp, Mat.class);
+        Mat imageOpenCV = ic.convert(imp, Mat.class);
 
-        KeyPointVector kpv = new opencv_core.KeyPointVector();
+        KeyPointVector kpv = new KeyPointVector();
 
         f2d.detect(imageOpenCV, kpv);
 

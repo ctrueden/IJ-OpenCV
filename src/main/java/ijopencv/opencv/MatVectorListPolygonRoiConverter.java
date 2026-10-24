@@ -30,8 +30,7 @@ import ij.gui.PolygonRoi;
 import ijopencv.ij.PolygonRoiMatConverter;
 import java.util.ArrayList;
 import java.util.List;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.MatVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -75,7 +74,7 @@ public class MatVectorListPolygonRoiConverter extends AbstractConverter<MatVecto
     }
 
     @Override
-    public Class< opencv_core.MatVector> getInputType() {
-        return opencv_core.MatVector.class;
+    public Class< MatVector> getInputType() {
+        return MatVector.class;
     }
 }

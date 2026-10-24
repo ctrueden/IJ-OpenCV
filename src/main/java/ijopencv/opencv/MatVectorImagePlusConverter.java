@@ -23,7 +23,7 @@ package ijopencv.opencv;
 
 import ij.ImagePlus;
 import ij.ImageStack;
-import org.bytedeco.javacpp.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.MatVector;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;

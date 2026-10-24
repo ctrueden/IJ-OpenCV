@@ -27,11 +27,11 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ijopencv.ij.ImagePlusMatConverter;
 import ijopencv.opencv.MatImagePlusConverter;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_photo;
+import org.bytedeco.opencv.global.opencv_photo;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Mat;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -54,7 +54,7 @@ public class Non_Local_Means_DenoisingJ_ implements Command {
         ImagePlusMatConverter ic = new ImagePlusMatConverter();
         MatImagePlusConverter mip = new MatImagePlusConverter();
 
-        opencv_core.Mat m = ic.convert(imp,opencv_core.Mat.class);
+        Mat m = ic.convert(imp,Mat.class);
 
         opencv_photo.fastNlMeansDenoisingColored(m, m, 10, 10, 7, 21);
 

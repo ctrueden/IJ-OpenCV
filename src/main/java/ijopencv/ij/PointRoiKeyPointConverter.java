@@ -24,8 +24,7 @@ package ijopencv.ij;
 import ij.gui.PointRoi;
 import ij.gui.Roi;
 import java.lang.reflect.Type;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacpp.opencv_core.KeyPoint;
+import org.bytedeco.opencv.opencv_core.KeyPoint;
 import org.scijava.Prioritized;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
@@ -54,7 +53,7 @@ public class PointRoiKeyPointConverter extends AbstractConverter< PointRoi, KeyP
     @Override
     public < T> T convert(Object o, Class< T> type) {
         PointRoi pr = (PointRoi)o;
-        opencv_core.KeyPoint p = new KeyPoint(pr.getXCoordinates()[0], pr.getYCoordinates()[0], 1);
+        KeyPoint p = new KeyPoint(pr.getXCoordinates()[0], pr.getYCoordinates()[0], 1);
         return(T) p;
     
     }

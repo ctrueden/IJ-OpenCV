@@ -41,13 +41,14 @@ import java.util.logging.Logger;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.javacpp.PointerPointer;
-import org.bytedeco.javacpp.opencv_core;
-import static org.bytedeco.javacpp.opencv_core.CV_8UC1;
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_imgproc;
+import org.bytedeco.opencv.global.opencv_core;
+import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.global.opencv_imgproc;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+import org.bytedeco.opencv.opencv_core.Scalar;
 
 /**
  *
@@ -84,19 +85,19 @@ public class measureOxidationJ_ implements Command {
         ImagePlusMatConverter ic  = new ImagePlusMatConverter();
         OvalRoiCircleCVConverter cc = new OvalRoiCircleCVConverter();
         
-        opencv_core.Mat newImage = ic.convert(imp,Mat.class);
+        Mat newImage = ic.convert(imp,Mat.class);
         // Create mask
-        opencv_core.Mat mask = new opencv_core.Mat(newImage.size(), CV_8UC1, opencv_core.Scalar.all(0));
+        Mat mask = new Mat(newImage.size(), CV_8UC1, Scalar.all(0));
         CircleCV c = cc.convert(or,CircleCV.class);
 
-        opencv_imgproc.circle(mask, c.getCenter(), c.getRadius(), new opencv_core.Scalar(255, 255, 255, 0), -1, 8, 0);
+        opencv_imgproc.circle(mask, c.getCenter(), c.getRadius(), new Scalar(255, 255, 255, 0), -1, 8, 0);
 
         // Image in LUV colorspace
-        opencv_core.Mat imageLUV = new opencv_core.Mat();
+        Mat imageLUV = new Mat();
         opencv_imgproc.cvtColor(newImage, imageLUV, opencv_imgproc.COLOR_BGR2Luv);
 
-        opencv_core.Mat hist = new opencv_core.Mat();
-        opencv_core.Mat blackHist = new opencv_core.Mat();
+        Mat hist = new Mat();
+        Mat blackHist = new Mat();
 
         // Since C++ `calcHist` is using arrays of arrays we need wrap to do some wrapping
         // in `IntPointer` and `PointerPointer` objects.
@@ -111,7 +112,7 @@ public class measureOxidationJ_ implements Command {
         opencv_imgproc.calcHist(imageLUV, 1, intPtrChannels, mask, hist, 3, intPtrHistSize, ptptranges, true, false);
         opencv_core.normalize(hist, hist);
 
-        opencv_core.Mat newImage2 = new opencv_core.Mat(newImage.size(), CV_8UC1, opencv_core.Scalar.all(0));
+        Mat newImage2 = new Mat(newImage.size(), CV_8UC1, Scalar.all(0));
         opencv_imgproc.cvtColor(newImage2, newImage2, opencv_imgproc.COLOR_GRAY2BGR);
 
         opencv_imgproc.calcHist(newImage2, 1, intPtrChannels, mask, blackHist, 3, intPtrHistSize, ptptranges, true, false);
